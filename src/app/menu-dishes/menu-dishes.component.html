@@ -1,0 +1,47 @@
+<div class="table-container">
+
+    <div>
+        <label for="menus">Select the menu</label>
+        <select id="menus" [(ngModel)]="selectedMenu" (change)="log()">
+            <!-- Optional: Placeholder option -->
+            <option value="" disabled selected>Select a menu</option>
+            
+            <!-- Iterate through menuList -->
+            <option *ngFor="let item of menuList" [value]="item">{{ item }}</option>
+        </select>
+    </div>
+    
+
+
+    <table class="dish-table">
+        <thead>
+            <tr>
+                <th>Dish ID</th>
+                <th>Dish Name</th>
+                <th>Price</th>
+                <th>Food Type</th>
+                <th>Image</th>
+                <th>Description</th>
+                <th>Menu Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dish of selectedDishes">
+                <td>{{ dish.dishId }}</td>
+                <td>{{ dish.dishName }}</td>
+                <td>{{ dish.price | currency }}</td> <!-- Using currency pipe for price -->
+                <td>{{ dish.food }}</td>
+                <td>
+                    <img [src]="dish.imageurl" alt="{{ dish.dishName }}" style="width: 100px; height: auto;" />
+                </td>
+                <td>{{ dish.description }}</td>
+                <td>{{ dish.menuname }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+
+
+
+</div>

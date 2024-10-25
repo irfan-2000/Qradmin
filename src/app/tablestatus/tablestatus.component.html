@@ -1,0 +1,65 @@
+<div class="container"     >
+ 
+<div class="boxes" *ngFor="let count of arr">
+
+    <div [id]="count"  class="box" (click)="onTableClick(count); gettableorder(count);">
+      <span>table {{count}}</span>
+    </div>
+    
+  </div>
+  
+  <div class="message position-absolute top-0 end-0 p-3" *ngIf="message">
+    <div class="alert alert-info">
+      {{ message }}
+      <div ng-if="Orderexist">No Orders </div>
+     
+     
+
+      <div *ngFor="let order of OrderedItems; let orderIndex = index">
+
+        <div *ngIf="Orderstatus[order.orderID] !== 'Order Accepted and Preparing' && Orderstatus[order.orderID] !== 'Served Enjoy Your Meal'">
+          <div class="button-group">
+            <button class="btn btn-success me-2" (click)="acceptOrder(order.orderID, 'accept')" 
+              *ngIf="Orderstatus[order.orderID] !== 'Order Rejected(Respective amount will be refuned)'    ">Accept</button>
+            
+            <button class="btn btn-danger" (click)="acceptOrder(order.orderID, 'reject')" 
+              *ngIf="Orderstatus[order.orderID] !== 'Order Rejected(Respective amount will be refuned)'     ">Reject</button>
+        
+            <span style="color: red;" *ngIf="Orderstatus[order.orderID] === 'Order Rejected(Respective amount will be refuned)'">Order Rejected</span>
+          </div>
+        </div>
+        
+        <div *ngIf="Orderstatus[order.orderID] === 'Order Accepted and Preparing'" class="button-group">
+          <button class="btn btn-success me-2" (click)="acceptOrder(order.orderID, 'Serve')">Serve</button>
+        </div>
+        
+        <div *ngIf="Orderstatus[order.orderID] === 'Served Enjoy Your Meal' ||  Orderstatus[order.orderID] === 'Order Rejected(Respective amount will be refuned)'"   class="button-group">
+          <button class="btn btn-success me-2" (click)="Cleartable()">Clear Table</button>
+        </div>
+        
+        <h5>Order {{ orderIndex + 1 }}</h5>
+        <p>Status: {{ Orderstatus[order.orderID] }}</p>
+        <div *ngFor="let dish of order.orderdata" class="card mb-3 shadow-sm">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img src="{{ dish.Imageurl }}" class="card-img" alt="{{ dish.Dishname }}" style="width: 100%;">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ dish.dishName }} ({{ dish.food }})</h5>
+                <p class="card-text">Price: ₹{{ dish.price }}</p>
+                <p class="card-text">
+                  <small class="text-muted">Dish Quantity: {{ dish.quantity }}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="mb-4" />
+      </div>
+    </div>
+  </div>
+
+  <div>
+  </div>
+</div>
